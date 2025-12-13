@@ -467,7 +467,7 @@
         individualInstrumentSelect.addEventListener('change', handleInstrumentChange);
         groupInstrumentSelect.addEventListener('change', handleInstrumentChange);
         durationRadios.forEach(radio => radio.addEventListener('change', calculateFee));
-        dayTypeRadios.forEach(radio => radio.addEventListener('change', calculateFee));
+        dayTypeRadios.forEach(radio => radio.addEventListener('change', handleDayTypeChange));
         planRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 updateKeyboardVisibility();
@@ -475,6 +475,23 @@
             });
         });
         keyboardCheckbox.addEventListener('change', calculateFee);
+
+        function handleDayTypeChange() {
+            const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
+            let hasInstrument = false;
+            
+            if (lessonType === 'individual') {
+                hasInstrument = !!individualInstrumentSelect.value;
+            } else if (lessonType === 'group') {
+                hasInstrument = !!groupInstrumentSelect.value;
+            }
+            
+            if (hasInstrument) {
+                planSection.style.display = 'block';
+            }
+            
+            calculateFee();
+        }
 
         function handleLessonTypeChange() {
             const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
@@ -509,6 +526,11 @@
             
             if (lessonType === 'individual') {
                 const instrument = individualInstrumentSelect.value;
+                if (!instrument) {
+                    planSection.style.display = 'none';
+                    return;
+                }
+                
                 if (instrument === 'piano') {
                     v4Option.classList.add('visible');
                     promoPlansGrid.classList.remove('single-button');
@@ -517,8 +539,15 @@
                     promoPlansGrid.classList.add('single-button');
                     document.getElementById('planV4').checked = false;
                 }
+            } else if (lessonType === 'group') {
+                const instrument = groupInstrumentSelect.value;
+                if (!instrument) {
+                    planSection.style.display = 'none';
+                    return;
+                }
             }
             
+            // Show plan section if day type is selected
             if (dayType) {
                 planSection.style.display = 'block';
             }
