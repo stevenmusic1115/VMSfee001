@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMS Tuition Fee Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .radio-group.single-promo {
+            grid-template-columns: 1fr;
+        }
+
+        .radio-option {
+            width: 100%;
+        }
+
+        .radio-option input[type="radio"] {
+            display: none;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .radio-option label:hover {
+            border-color: #667eea;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-option:hover {
+            border-color: #667eea;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-option.checked {
+            background: #f0f4ff;
+            border-color: #667eea;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .result-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .fee-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .fee-item:last-child {
+            border-bottom: none;
+        }
+
+        .fee-label {
+            font-size: 15px;
+        }
+
+        .fee-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .total-row {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #856404;
+        }
+
+        .promo-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 11px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        #keyboardSection {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VMS Music School</h1>
+        <div class="subtitle">Tuition Fee Calculator</div>
+
+        <div class="form-group">
+            <label>Select Instrument</label>
+            <select id="instrument">
+                <option value="">-- Please Select --</option>
+                <option value="piano">Piano</option>
+                <option value="guitar">Guitar</option>
+                <option value="ukulele">Ukulele</option>
+                <option value="violin">Violin</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Lesson Duration</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="duration30" name="duration" value="30">
+                    <label for="duration30">30 Minutes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="duration45" name="duration" value="45">
+                    <label for="duration45">45 Minutes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Lesson Day Type</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="weekday" name="daytype" value="weekday">
+                    <label for="weekday">Weekday<br>(Mon-Thu)</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="weekend" name="daytype" value="weekend">
+                    <label for="weekend">Weekend<br>(Fri-Sun)</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Promotional Plans</label>
+            <div class="radio-group" id="promoPlansGrid">
+                <div class="radio-option" id="promo2monthOption">
+                    <input type="radio" id="plan2month" name="plan" value="2month">
+                    <label for="plan2month">First 2 Month Promotion<span class="promo-badge">PROMO</span></label>
+                </div>
+                <div class="radio-option" id="v4Option" style="display:none;">
+                    <input type="radio" id="planV4" name="plan" value="v4">
+                    <label for="planV4">V4 Plan (4 Months)<span class="promo-badge">PIANO ONLY</span><br><small style="font-size: 11px; opacity: 0.9;">Includes 37-Key Keyboard</small></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Regular Plans</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="plan3month" name="plan" value="3month">
+                    <label for="plan3month">V Plan (3-Month)</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="plan1month" name="plan" value="1month">
+                    <label for="plan1month">Monthly Plan</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Add-ons (Optional)</label>
+            
+            <div class="checkbox-option" id="registrationCheckbox">
+                <input type="checkbox" id="registration">
+                <label for="registration" style="cursor: pointer; margin: 0;">Registration Fee ($48)</label>
+            </div>
+
+            <div class="checkbox-option" id="keyboardCheckbox" style="display:none; margin-top: 10px;">
+                <input type="checkbox" id="keyboard">
+                <label for="keyboard" style="cursor: pointer; margin: 0;">37-Key Keyboard ($199)</label>
+            </div>
+        </div>
+
+        <div id="v4KeyboardNote" style="display:none; background: #e7f3ff; border-left: 4px solid #2196F3; padding: 12px 15px; margin-top: 15px; border-radius: 5px; font-size: 13px; color: #1565C0;">
+            <strong>✓ V4 Plan includes 37-Key Keyboard ($99)</strong> - The keyboard fee is automatically included in your total.
+        </div>
+
+        <div id="result" style="display: none;">
+            <div class="result-box">
+                <div class="result-title">Fee Breakdown</div>
+                
+                <div class="fee-item">
+                    <span class="fee-label">Monthly Tuition</span>
+                    <span class="fee-value" id="monthlyFee">$0</span>
+                </div>
+                
+                <div class="fee-item">
+                    <span class="fee-label">Deposit (1 Month)</span>
+                    <span class="fee-value" id="deposit">$0</span>
+                </div>
+                
+                <div class="fee-item" id="registrationFeeRow" style="display: none;">
+                    <span class="fee-label">Registration Fee</span>
+                    <span class="fee-value">$48</span>
+                </div>
+                
+                <div class="fee-item" id="keyboardFeeRow" style="display: none;">
+                    <span class="fee-label">37-Key Keyboard</span>
+                    <span class="fee-value" id="keyboardFee">$0</span>
+                </div>
+                
+                <div class="fee-item total-row">
+                    <span class="fee-label">Total Amount Due</span>
+                    <span class="fee-value" id="totalFee">$0</span>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Note:</strong> The deposit is refundable and equals one month's tuition. <span id="registrationNote" style="display:none;">Registration fee is non-refundable.</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const feeStructure = {
+            '2month': {
+                '30': { weekday: 145, weekend: 160 },
+                '45': { weekday: 200, weekend: 215 }
+            },
+            'v4': {
+                '30': { weekday: 150, weekend: 165 },
+                '45': { weekday: 205, weekend: 220 }
+            },
+            '3month': {
+                '30': { weekday: 150, weekend: 165 },
+                '45': { weekday: 205, weekend: 220 }
+            },
+            '1month': {
+                '30': { weekday: 170, weekend: 185 },
+                '45': { weekday: 225, weekend: 240 }
+            }
+        };
+
+        const instrumentSelect = document.getElementById('instrument');
+        const durationRadios = document.querySelectorAll('input[name="duration"]');
+        const dayTypeRadios = document.querySelectorAll('input[name="daytype"]');
+        const planRadios = document.querySelectorAll('input[name="plan"]');
+        const keyboardCheckbox = document.getElementById('keyboard');
+        const registrationCheckbox = document.getElementById('registration');
+        const v4Option = document.getElementById('v4Option');
+        const promoPlansGrid = document.getElementById('promoPlansGrid');
+        const keyboardCheckboxContainer = document.getElementById('keyboardCheckbox');
+        const v4KeyboardNote = document.getElementById('v4KeyboardNote');
+        const result = document.getElementById('result');
+
+        instrumentSelect.addEventListener('change', function() {
+            if (this.value === 'piano') {
+                v4Option.style.display = 'block';
+                promoPlansGrid.classList.remove('single-promo');
+            } else {
+                v4Option.style.display = 'none';
+                promoPlansGrid.classList.add('single-promo');
+                document.getElementById('planV4').checked = false;
+            }
+            calculateFee();
+        });
+
+        durationRadios.forEach(radio => radio.addEventListener('change', calculateFee));
+        dayTypeRadios.forEach(radio => radio.addEventListener('change', calculateFee));
+        planRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                updateKeyboardVisibility();
+                calculateFee();
+            });
+        });
+        keyboardCheckbox.addEventListener('change', calculateFee);
+        registrationCheckbox.addEventListener('change', calculateFee);
+
+        document.getElementById('keyboardCheckbox').addEventListener('click', function(e) {
+            if (e.target.tagName !== 'INPUT') {
+                keyboardCheckbox.checked = !keyboardCheckbox.checked;
+                this.classList.toggle('checked', keyboardCheckbox.checked);
+                calculateFee();
+            } else {
+                this.classList.toggle('checked', keyboardCheckbox.checked);
+            }
+        });
+
+        document.getElementById('registrationCheckbox').addEventListener('click', function(e) {
+            if (e.target.tagName !== 'INPUT') {
+                registrationCheckbox.checked = !registrationCheckbox.checked;
+                this.classList.toggle('checked', registrationCheckbox.checked);
+                calculateFee();
+            } else {
+                this.classList.toggle('checked', registrationCheckbox.checked);
+            }
+        });
+
+        function updateKeyboardVisibility() {
+            const instrument = instrumentSelect.value;
+            const plan = document.querySelector('input[name="plan"]:checked')?.value;
+            
+            // Show keyboard add-on only for piano with First 2 Month Promotion
+            if (instrument === 'piano' && plan === '2month') {
+                keyboardCheckboxContainer.style.display = 'flex';
+                v4KeyboardNote.style.display = 'none';
+            } else if (instrument === 'piano' && plan === 'v4') {
+                // V4 includes keyboard, show note instead of checkbox
+                keyboardCheckboxContainer.style.display = 'none';
+                keyboardCheckbox.checked = false;
+                v4KeyboardNote.style.display = 'block';
+            } else {
+                keyboardCheckboxContainer.style.display = 'none';
+                keyboardCheckbox.checked = false;
+                v4KeyboardNote.style.display = 'none';
+            }
+        }
+
+        function calculateFee() {
+            const instrument = instrumentSelect.value;
+            const duration = document.querySelector('input[name="duration"]:checked')?.value;
+            const dayType = document.querySelector('input[name="daytype"]:checked')?.value;
+            const plan = document.querySelector('input[name="plan"]:checked')?.value;
+
+            if (!instrument || !duration || !dayType || !plan) {
+                result.style.display = 'none';
+                return;
+            }
+
+            const monthlyTuition = feeStructure[plan][duration][dayType];
+            let deposit = monthlyTuition; // Deposit always equals monthly tuition only
+            let registrationFee = 0;
+            let keyboardFee = 0;
+
+            // Handle V4 keyboard (always included)
+            if (plan === 'v4') {
+                keyboardFee = 99;
+                document.getElementById('keyboardFeeRow').style.display = 'flex';
+                document.getElementById('keyboardFee').textContent = '$99';
+            }
+            // Handle First 2 Month keyboard add-on (optional)
+            else if (keyboardCheckbox.checked && plan === '2month') {
+                keyboardFee = 199;
+                document.getElementById('keyboardFeeRow').style.display = 'flex';
+                document.getElementById('keyboardFee').textContent = '$199';
+            } else {
+                document.getElementById('keyboardFeeRow').style.display = 'none';
+            }
+
+            // Handle registration fee
+            if (registrationCheckbox.checked) {
+                registrationFee = 48;
+                document.getElementById('registrationFeeRow').style.display = 'flex';
+                document.getElementById('registrationNote').style.display = 'inline';
+            } else {
+                document.getElementById('registrationFeeRow').style.display = 'none';
+                document.getElementById('registrationNote').style.display = 'none';
+            }
+
+            const total = monthlyTuition + deposit + registrationFee + keyboardFee;
+
+            document.getElementById('monthlyFee').textContent = '$' + monthlyTuition;
+            document.getElementById('deposit').textContent = '$' + deposit;
+            document.getElementById('totalFee').textContent = '$' + total;
+
+            result.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
