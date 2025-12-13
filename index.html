@@ -79,6 +79,10 @@
             gap: 15px;
         }
 
+        .promo-plans-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
         .promo-plans-grid.single-button {
             grid-template-columns: 1fr;
         }
@@ -106,7 +110,10 @@
         }
 
         .radio-option label {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 15px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
@@ -114,6 +121,7 @@
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
+            min-height: 60px;
         }
 
         .radio-option input[type="radio"]:checked + label {
@@ -288,7 +296,7 @@
                 </div>
                 <div class="radio-option" id="v4Option">
                     <input type="radio" id="planV4" name="plan" value="v4">
-                    <label for="planV4">V4 Plan (4-Month)<span class="promo-badge">PIANO ONLY</span><br><small style="font-size: 11px; opacity: 0.9;">Includes 37-Key Keyboard</small></label>
+                    <label for="planV4">V4 Plan (4-Month)<span class="promo-badge">PIANO ONLY</span></label>
                 </div>
             </div>
         </div>
@@ -309,15 +317,14 @@
 
         <div class="form-group">
             <label>Add-ons (Optional)</label>
-            
-            <div class="checkbox-option" id="registrationCheckbox">
-                <input type="checkbox" id="registration">
-                <label for="registration" style="cursor: pointer; margin: 0;">Registration Fee ($48)</label>
-            </div>
 
-            <div class="checkbox-option" id="keyboardCheckbox" style="display:none; margin-top: 10px;">
+            <div class="checkbox-option" id="keyboardCheckbox" style="display:none;">
                 <input type="checkbox" id="keyboard">
                 <label for="keyboard" style="cursor: pointer; margin: 0;">37-Key Keyboard ($199)</label>
+            </div>
+
+            <div id="noAddons" style="padding: 15px; text-align: center; color: #999; font-size: 14px;">
+                No add-ons available for this plan
             </div>
         </div>
 
@@ -329,14 +336,14 @@
             <div class="result-box">
                 <div class="result-title">Fee Breakdown</div>
                 
-                <div class="fee-item">
-                    <span class="fee-label">Monthly Tuition</span>
-                    <span class="fee-value" id="monthlyFee">$0</span>
-                </div>
-
                 <div class="fee-item" id="monthsPaymentRow" style="display: none;">
                     <span class="fee-label" id="monthsPaymentLabel">Tuition Payment (3 Months)</span>
                     <span class="fee-value" id="monthsPayment">$0</span>
+                </div>
+
+                <div class="fee-item" id="monthlyFeeRow">
+                    <span class="fee-label" id="monthlyFeeLabel">Monthly Tuition</span>
+                    <span class="fee-value" id="monthlyFee">$0</span>
                 </div>
                 
                 <div class="fee-item">
@@ -361,7 +368,7 @@
             </div>
 
             <div class="note">
-                <strong>Note:</strong> The deposit is refundable and equals one month's tuition. <span id="registrationNote" style="display:none;">Registration fee is non-refundable.</span>
+                <strong>Note:</strong> The deposit is refundable and equals one month's tuition. <span id="promoNote" style="display:none;">Registration fee ($48) is included for promotional plans and is non-refundable.</span>
             </div>
         </div>
     </div>
@@ -394,10 +401,10 @@
         const dayTypeRadios = document.querySelectorAll('input[name="daytype"]');
         const planRadios = document.querySelectorAll('input[name="plan"]');
         const keyboardCheckbox = document.getElementById('keyboard');
-        const registrationCheckbox = document.getElementById('registration');
         const v4Option = document.getElementById('v4Option');
         const promoPlansGrid = document.querySelector('.promo-plans-grid');
         const keyboardCheckboxContainer = document.getElementById('keyboardCheckbox');
+        const noAddons = document.getElementById('noAddons');
         const v4KeyboardNote = document.getElementById('v4KeyboardNote');
         const result = document.getElementById('result');
 
@@ -422,7 +429,6 @@
             });
         });
         keyboardCheckbox.addEventListener('change', calculateFee);
-        registrationCheckbox.addEventListener('change', calculateFee);
 
         document.getElementById('keyboardCheckbox').addEventListener('click', function(e) {
             if (e.target.tagName !== 'INPUT') {
@@ -434,16 +440,6 @@
             }
         });
 
-        document.getElementById('registrationCheckbox').addEventListener('click', function(e) {
-            if (e.target.tagName !== 'INPUT') {
-                registrationCheckbox.checked = !registrationCheckbox.checked;
-                this.classList.toggle('checked', registrationCheckbox.checked);
-                calculateFee();
-            } else {
-                this.classList.toggle('checked', registrationCheckbox.checked);
-            }
-        });
-
         function updateKeyboardVisibility() {
             const instrument = instrumentSelect.value;
             const plan = document.querySelector('input[name="plan"]:checked')?.value;
@@ -451,14 +447,17 @@
             // Show keyboard add-on only for piano with First 2 Month Promotion
             if (instrument === 'piano' && plan === '2month') {
                 keyboardCheckboxContainer.style.display = 'flex';
+                noAddons.style.display = 'none';
                 v4KeyboardNote.style.display = 'none';
             } else if (instrument === 'piano' && plan === 'v4') {
                 // V4 includes keyboard, show note instead of checkbox
                 keyboardCheckboxContainer.style.display = 'none';
+                noAddons.style.display = 'none';
                 keyboardCheckbox.checked = false;
                 v4KeyboardNote.style.display = 'block';
             } else {
                 keyboardCheckboxContainer.style.display = 'none';
+                noAddons.style.display = 'block';
                 keyboardCheckbox.checked = false;
                 v4KeyboardNote.style.display = 'none';
             }
@@ -489,14 +488,34 @@
             let monthsCount = 1;
 
             // Handle multi-month payment plans
-            if (plan === '3month') {
+            if (plan === 'v4') {
+                monthsCount = 4;
+                tuitionPayment = monthlyTuition * 4;
+                document.getElementById('monthsPaymentRow').style.display = 'flex';
+                document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (4 Months)';
+                document.getElementById('monthsPayment').textContent = '$' + tuitionPayment;
+                document.getElementById('monthlyFeeRow').style.display = 'none';
+            } else if (plan === '3month') {
                 monthsCount = 3;
                 tuitionPayment = monthlyTuition * 3;
                 document.getElementById('monthsPaymentRow').style.display = 'flex';
                 document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (3 Months)';
                 document.getElementById('monthsPayment').textContent = '$' + tuitionPayment;
+                document.getElementById('monthlyFeeRow').style.display = 'none';
             } else {
                 document.getElementById('monthsPaymentRow').style.display = 'none';
+                document.getElementById('monthlyFeeRow').style.display = 'flex';
+            }
+
+            // Handle registration fee - auto-include for promotional plans
+            if (plan === '2month' || plan === 'v4') {
+                registrationFee = 48;
+                document.getElementById('registrationFeeRow').style.display = 'flex';
+                document.getElementById('promoNote').style.display = 'inline';
+            } else {
+                registrationFee = 0;
+                document.getElementById('registrationFeeRow').style.display = 'none';
+                document.getElementById('promoNote').style.display = 'none';
             }
 
             // Handle V4 keyboard (always included)
@@ -512,16 +531,6 @@
                 document.getElementById('keyboardFee').textContent = '$199';
             } else {
                 document.getElementById('keyboardFeeRow').style.display = 'none';
-            }
-
-            // Handle registration fee
-            if (registrationCheckbox.checked) {
-                registrationFee = 48;
-                document.getElementById('registrationFeeRow').style.display = 'flex';
-                document.getElementById('registrationNote').style.display = 'inline';
-            } else {
-                document.getElementById('registrationFeeRow').style.display = 'none';
-                document.getElementById('registrationNote').style.display = 'none';
             }
 
             const total = tuitionPayment + deposit + registrationFee + keyboardFee;
