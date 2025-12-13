@@ -346,7 +346,7 @@
                     <span class="fee-value" id="monthlyFee">$0</span>
                 </div>
                 
-                <div class="fee-item">
+                <div class="fee-item" id="depositRow">
                     <span class="fee-label">Deposit (1 Month)</span>
                     <span class="fee-value" id="deposit">$0</span>
                 </div>
@@ -367,8 +367,8 @@
                 </div>
             </div>
 
-            <div class="note">
-                <strong>Note:</strong> The deposit is refundable and equals one month's tuition. <span id="promoNote" style="display:none;">Registration fee ($48) is included for promotional plans and is non-refundable.</span>
+            <div class="note" id="noteSection">
+                <span id="depositNote"><strong>Note:</strong> The deposit is refundable and equals one month's tuition.</span> <span id="promoNote" style="display:none;">Registration fee ($48) is included for promotional plans and is non-refundable.</span>
             </div>
         </div>
     </div>
@@ -481,11 +481,22 @@
                 monthlyTuition += singPlaySurcharge;
             }
             
-            let deposit = monthlyTuition; // Deposit always equals monthly tuition only
+            let deposit = 0;
             let registrationFee = 0;
             let keyboardFee = 0;
             let tuitionPayment = monthlyTuition; // Default to 1 month
             let monthsCount = 1;
+
+            // Deposit only for promotional plans (2month and v4)
+            if (plan === '2month' || plan === 'v4') {
+                deposit = monthlyTuition;
+                document.getElementById('depositRow').style.display = 'flex';
+                document.getElementById('depositNote').style.display = 'inline';
+            } else {
+                deposit = 0;
+                document.getElementById('depositRow').style.display = 'none';
+                document.getElementById('depositNote').style.display = 'none';
+            }
 
             // Handle multi-month payment plans
             if (plan === 'v4') {
