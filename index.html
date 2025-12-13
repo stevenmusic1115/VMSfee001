@@ -489,7 +489,9 @@
                 individualInstrumentSection.style.display = 'none';
                 groupInstrumentSection.style.display = 'block';
                 durationSection.style.display = 'none';
-                promotionalPlansSection.style.display = 'none';
+                promotionalPlansSection.style.display = 'block';  // Show promotional section
+                promoPlansGrid.classList.add('single-button');  // Make First 2 Month full width
+                v4Option.classList.remove('visible');  // Hide V4 option
                 individualInstrumentSelect.value = '';
                 // Uncheck V4 plan for group lessons
                 document.getElementById('planV4').checked = false;
