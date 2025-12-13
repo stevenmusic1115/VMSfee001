@@ -315,6 +315,11 @@
                     <span class="fee-label">Monthly Tuition</span>
                     <span class="fee-value" id="monthlyFee">$0</span>
                 </div>
+
+                <div class="fee-item" id="monthsPaymentRow" style="display: none;">
+                    <span class="fee-label" id="monthsPaymentLabel">Tuition Payment (3 Months)</span>
+                    <span class="fee-value" id="monthsPayment">$0</span>
+                </div>
                 
                 <div class="fee-item">
                     <span class="fee-label">Deposit (1 Month)</span>
@@ -460,6 +465,19 @@
             let deposit = monthlyTuition; // Deposit always equals monthly tuition only
             let registrationFee = 0;
             let keyboardFee = 0;
+            let tuitionPayment = monthlyTuition; // Default to 1 month
+            let monthsCount = 1;
+
+            // Handle multi-month payment plans
+            if (plan === '3month') {
+                monthsCount = 3;
+                tuitionPayment = monthlyTuition * 3;
+                document.getElementById('monthsPaymentRow').style.display = 'flex';
+                document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (3 Months)';
+                document.getElementById('monthsPayment').textContent = '$' + tuitionPayment;
+            } else {
+                document.getElementById('monthsPaymentRow').style.display = 'none';
+            }
 
             // Handle V4 keyboard (always included)
             if (plan === 'v4') {
@@ -486,7 +504,7 @@
                 document.getElementById('registrationNote').style.display = 'none';
             }
 
-            const total = monthlyTuition + deposit + registrationFee + keyboardFee;
+            const total = tuitionPayment + deposit + registrationFee + keyboardFee;
 
             document.getElementById('monthlyFee').textContent = '$' + monthlyTuition;
             document.getElementById('deposit').textContent = '$' + deposit;
