@@ -248,8 +248,22 @@
         <div class="subtitle">Tuition Fee Calculator</div>
 
         <div class="form-group">
+            <label>Lesson Type</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="individual" name="lessontype" value="individual">
+                    <label for="individual">Individual Lesson</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="group" name="lessontype" value="group">
+                    <label for="group">Group Lesson</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" id="individualInstrumentSection" style="display:none;">
             <label>Select Instrument</label>
-            <select id="instrument">
+            <select id="individualInstrument">
                 <option value="">-- Please Select --</option>
                 <option value="piano">Piano</option>
                 <option value="guitar">Guitar</option>
@@ -259,7 +273,19 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="groupInstrumentSection" style="display:none;">
+            <label>Select Instrument</label>
+            <select id="groupInstrument">
+                <option value="">-- Please Select --</option>
+                <option value="guitar_acoustic">Guitar (Acoustic)</option>
+                <option value="guitar_classical">Guitar (Classical)</option>
+                <option value="guitar_electric">Guitar (Electric)</option>
+                <option value="ukulele">Ukulele</option>
+                <option value="singplay">Sing & Play</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="durationSection" style="display:none;">
             <label>Lesson Duration</label>
             <div class="radio-group">
                 <div class="radio-option">
@@ -287,30 +313,32 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label>Promotional Plans</label>
-            <div class="radio-group promo-plans-grid">
-                <div class="radio-option">
-                    <input type="radio" id="plan2month" name="plan" value="2month">
-                    <label for="plan2month">First 2 Month Promotion<span class="promo-badge">PROMO</span></label>
-                </div>
-                <div class="radio-option" id="v4Option">
-                    <input type="radio" id="planV4" name="plan" value="v4">
-                    <label for="planV4">V4 Plan (4-Month)<span class="promo-badge">PIANO ONLY</span></label>
+        <div class="form-group" id="planSection" style="display:none;">
+            <div id="promotionalPlansSection">
+                <label>Promotional Plans</label>
+                <div class="radio-group promo-plans-grid">
+                    <div class="radio-option">
+                        <input type="radio" id="plan2month" name="plan" value="2month">
+                        <label for="plan2month">First 2 Month Promotion<span class="promo-badge">PROMO</span></label>
+                    </div>
+                    <div class="radio-option" id="v4Option">
+                        <input type="radio" id="planV4" name="plan" value="v4">
+                        <label for="planV4">V4 Plan (4-Month)<span class="promo-badge">PIANO ONLY</span></label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Regular Plans</label>
-            <div class="radio-group">
-                <div class="radio-option">
-                    <input type="radio" id="plan3month" name="plan" value="3month">
-                    <label for="plan3month">V Plan (3-Month)</label>
-                </div>
-                <div class="radio-option">
-                    <input type="radio" id="plan1month" name="plan" value="1month">
-                    <label for="plan1month">Monthly Plan</label>
+            <div style="margin-top: 25px;">
+                <label>Regular Plans</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="plan3month" name="plan" value="3month">
+                        <label for="plan3month">V Plan (3-Month)</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="plan1month" name="plan" value="1month">
+                        <label for="plan1month">Monthly Plan</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -374,7 +402,8 @@
     </div>
 
     <script>
-        const feeStructure = {
+        // Individual lesson fee structure
+        const individualFeeStructure = {
             '2month': {
                 '30': { weekday: 145, weekend: 160 },
                 '45': { weekday: 200, weekend: 215 }
@@ -393,10 +422,36 @@
             }
         };
 
-        // Sing & Play surcharge
+        // Group lesson fee structure (no duration needed)
+        const groupFeeStructure = {
+            'guitar': {
+                '2month': { weekday: 100, weekend: 115 },
+                '3month': { weekday: 105, weekend: 120 },
+                '1month': { weekday: 125, weekend: 140 }
+            },
+            'ukulele': {
+                '2month': { weekday: 80, weekend: 95 },
+                '3month': { weekday: 85, weekend: 100 },
+                '1month': { weekday: 105, weekend: 120 }
+            },
+            'singplay': {
+                '2month': { weekday: 100, weekend: 115 },
+                '3month': { weekday: 105, weekend: 120 },
+                '1month': { weekday: 125, weekend: 140 }
+            }
+        };
+
+        // Sing & Play surcharge (Individual only)
         const singPlaySurcharge = 5;
 
-        const instrumentSelect = document.getElementById('instrument');
+        const lessonTypeRadios = document.querySelectorAll('input[name="lessontype"]');
+        const individualInstrumentSection = document.getElementById('individualInstrumentSection');
+        const groupInstrumentSection = document.getElementById('groupInstrumentSection');
+        const individualInstrumentSelect = document.getElementById('individualInstrument');
+        const groupInstrumentSelect = document.getElementById('groupInstrument');
+        const durationSection = document.getElementById('durationSection');
+        const planSection = document.getElementById('planSection');
+        const promotionalPlansSection = document.getElementById('promotionalPlansSection');
         const durationRadios = document.querySelectorAll('input[name="duration"]');
         const dayTypeRadios = document.querySelectorAll('input[name="daytype"]');
         const planRadios = document.querySelectorAll('input[name="plan"]');
@@ -408,18 +463,9 @@
         const v4KeyboardNote = document.getElementById('v4KeyboardNote');
         const result = document.getElementById('result');
 
-        instrumentSelect.addEventListener('change', function() {
-            if (this.value === 'piano') {
-                v4Option.classList.add('visible');
-                promoPlansGrid.classList.remove('single-button');
-            } else {
-                v4Option.classList.remove('visible');
-                promoPlansGrid.classList.add('single-button');
-                document.getElementById('planV4').checked = false;
-            }
-            calculateFee();
-        });
-
+        lessonTypeRadios.forEach(radio => radio.addEventListener('change', handleLessonTypeChange));
+        individualInstrumentSelect.addEventListener('change', handleInstrumentChange);
+        groupInstrumentSelect.addEventListener('change', handleInstrumentChange);
         durationRadios.forEach(radio => radio.addEventListener('change', calculateFee));
         dayTypeRadios.forEach(radio => radio.addEventListener('change', calculateFee));
         planRadios.forEach(radio => {
@@ -429,6 +475,54 @@
             });
         });
         keyboardCheckbox.addEventListener('change', calculateFee);
+
+        function handleLessonTypeChange() {
+            const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
+            
+            if (lessonType === 'individual') {
+                individualInstrumentSection.style.display = 'block';
+                groupInstrumentSection.style.display = 'none';
+                durationSection.style.display = 'block';
+                promotionalPlansSection.style.display = 'block';
+                groupInstrumentSelect.value = '';
+            } else if (lessonType === 'group') {
+                individualInstrumentSection.style.display = 'none';
+                groupInstrumentSection.style.display = 'block';
+                durationSection.style.display = 'none';
+                promotionalPlansSection.style.display = 'none';
+                individualInstrumentSelect.value = '';
+                // Uncheck V4 plan for group lessons
+                document.getElementById('planV4').checked = false;
+                // Clear duration selection
+                durationRadios.forEach(radio => radio.checked = false);
+            }
+            
+            planSection.style.display = 'none';
+            result.style.display = 'none';
+        }
+
+        function handleInstrumentChange() {
+            const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
+            const dayType = document.querySelector('input[name="daytype"]:checked')?.value;
+            
+            if (lessonType === 'individual') {
+                const instrument = individualInstrumentSelect.value;
+                if (instrument === 'piano') {
+                    v4Option.classList.add('visible');
+                    promoPlansGrid.classList.remove('single-button');
+                } else {
+                    v4Option.classList.remove('visible');
+                    promoPlansGrid.classList.add('single-button');
+                    document.getElementById('planV4').checked = false;
+                }
+            }
+            
+            if (dayType) {
+                planSection.style.display = 'block';
+            }
+            
+            calculateFee();
+        }
 
         document.getElementById('keyboardCheckbox').addEventListener('click', function(e) {
             if (e.target.tagName !== 'INPUT') {
@@ -441,15 +535,16 @@
         });
 
         function updateKeyboardVisibility() {
-            const instrument = instrumentSelect.value;
+            const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
+            const instrument = individualInstrumentSelect.value;
             const plan = document.querySelector('input[name="plan"]:checked')?.value;
             
-            // Show keyboard add-on only for piano with First 2 Month Promotion
-            if (instrument === 'piano' && plan === '2month') {
+            // Keyboard only available for individual piano lessons
+            if (lessonType === 'individual' && instrument === 'piano' && plan === '2month') {
                 keyboardCheckboxContainer.style.display = 'flex';
                 noAddons.style.display = 'none';
                 v4KeyboardNote.style.display = 'none';
-            } else if (instrument === 'piano' && plan === 'v4') {
+            } else if (lessonType === 'individual' && instrument === 'piano' && plan === 'v4') {
                 // V4 includes keyboard, show note instead of checkbox
                 keyboardCheckboxContainer.style.display = 'none';
                 noAddons.style.display = 'none';
@@ -464,28 +559,66 @@
         }
 
         function calculateFee() {
-            const instrument = instrumentSelect.value;
-            const duration = document.querySelector('input[name="duration"]:checked')?.value;
+            const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
             const dayType = document.querySelector('input[name="daytype"]:checked')?.value;
             const plan = document.querySelector('input[name="plan"]:checked')?.value;
 
-            if (!instrument || !duration || !dayType || !plan) {
+            if (!lessonType || !dayType || !plan) {
                 result.style.display = 'none';
                 return;
             }
 
-            let monthlyTuition = feeStructure[plan][duration][dayType];
+            let monthlyTuition = 0;
+            let instrument = '';
             
-            // Apply Sing & Play surcharge
-            if (instrument === 'singplay') {
-                monthlyTuition += singPlaySurcharge;
+            if (lessonType === 'individual') {
+                instrument = individualInstrumentSelect.value;
+                const duration = document.querySelector('input[name="duration"]:checked')?.value;
+                
+                if (!instrument || !duration) {
+                    result.style.display = 'none';
+                    return;
+                }
+                
+                // V4 plan only available for individual piano
+                if (plan === 'v4' && instrument !== 'piano') {
+                    result.style.display = 'none';
+                    return;
+                }
+                
+                monthlyTuition = individualFeeStructure[plan][duration][dayType];
+                
+                // Apply Sing & Play surcharge for individual lessons
+                if (instrument === 'singplay') {
+                    monthlyTuition += singPlaySurcharge;
+                }
+            } else if (lessonType === 'group') {
+                instrument = groupInstrumentSelect.value;
+                
+                if (!instrument) {
+                    result.style.display = 'none';
+                    return;
+                }
+                
+                // Group lessons don't have V4 plan
+                if (plan === 'v4') {
+                    result.style.display = 'none';
+                    return;
+                }
+                
+                // Map guitar types to 'guitar' for fee lookup
+                let instrumentKey = instrument;
+                if (instrument.startsWith('guitar_')) {
+                    instrumentKey = 'guitar';
+                }
+                
+                monthlyTuition = groupFeeStructure[instrumentKey][plan][dayType];
             }
             
             let deposit = 0;
             let registrationFee = 0;
             let keyboardFee = 0;
-            let tuitionPayment = monthlyTuition; // Default to 1 month
-            let monthsCount = 1;
+            let tuitionPayment = monthlyTuition;
 
             // Deposit only for promotional plans (2month and v4)
             if (plan === '2month' || plan === 'v4') {
@@ -500,14 +633,12 @@
 
             // Handle multi-month payment plans
             if (plan === 'v4') {
-                monthsCount = 4;
                 tuitionPayment = monthlyTuition * 4;
                 document.getElementById('monthsPaymentRow').style.display = 'flex';
                 document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (4 Months)';
                 document.getElementById('monthsPayment').textContent = '$' + tuitionPayment;
                 document.getElementById('monthlyFeeRow').style.display = 'none';
             } else if (plan === '3month') {
-                monthsCount = 3;
                 tuitionPayment = monthlyTuition * 3;
                 document.getElementById('monthsPaymentRow').style.display = 'flex';
                 document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (3 Months)';
@@ -529,14 +660,14 @@
                 document.getElementById('promoNote').style.display = 'none';
             }
 
-            // Handle V4 keyboard (always included)
-            if (plan === 'v4') {
+            // Handle V4 keyboard (only for individual piano)
+            if (plan === 'v4' && lessonType === 'individual' && instrument === 'piano') {
                 keyboardFee = 99;
                 document.getElementById('keyboardFeeRow').style.display = 'flex';
                 document.getElementById('keyboardFee').textContent = '$99';
             }
-            // Handle First 2 Month keyboard add-on (optional)
-            else if (keyboardCheckbox.checked && plan === '2month') {
+            // Handle First 2 Month keyboard add-on (only for individual piano)
+            else if (keyboardCheckbox.checked && plan === '2month' && lessonType === 'individual' && instrument === 'piano') {
                 keyboardFee = 199;
                 document.getElementById('keyboardFeeRow').style.display = 'flex';
                 document.getElementById('keyboardFee').textContent = '$199';
