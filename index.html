@@ -53,18 +53,19 @@
             display: block;
             margin-bottom: 8px;
             color: #333;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 16px;
         }
 
         select, input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 17px;
             transition: all 0.3s;
             background: white;
+            font-weight: 500;
         }
 
         select:focus, input:focus {
@@ -120,7 +121,8 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 16px;
             min-height: 60px;
         }
 
@@ -168,16 +170,16 @@
         }
 
         .result-title {
-            font-size: 18px;
+            font-size: 22px;
             margin-bottom: 20px;
             text-align: center;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .fee-item {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px solid rgba(255,255,255,0.2);
         }
 
@@ -186,20 +188,21 @@
         }
 
         .fee-label {
-            font-size: 15px;
+            font-size: 17px;
+            font-weight: 600;
         }
 
         .fee-value {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 700;
         }
 
         .total-row {
             margin-top: 15px;
             padding-top: 15px;
             border-top: 2px solid rgba(255,255,255,0.3);
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
         }
 
         .note {
@@ -244,11 +247,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>VMS Music School</h1>
+        <h1>🐰 VMS Music School 🐰</h1>
         <div class="subtitle">Tuition Fee Calculator</div>
 
         <div class="form-group">
-            <label>Lesson Type</label>
+            <label>🐰 Lesson Type 🐰</label>
             <div class="radio-group">
                 <div class="radio-option">
                     <input type="radio" id="individual" name="lessontype" value="individual">
@@ -262,7 +265,7 @@
         </div>
 
         <div class="form-group" id="individualInstrumentSection" style="display:none;">
-            <label>Select Instrument</label>
+            <label>🐰 Select Instrument 🐰</label>
             <select id="individualInstrument">
                 <option value="">-- Please Select --</option>
                 <option value="piano">Piano</option>
@@ -274,7 +277,7 @@
         </div>
 
         <div class="form-group" id="groupInstrumentSection" style="display:none;">
-            <label>Select Instrument</label>
+            <label>🐰 Select Instrument 🐰</label>
             <select id="groupInstrument">
                 <option value="">-- Please Select --</option>
                 <option value="guitar_acoustic">Guitar (Acoustic)</option>
@@ -286,7 +289,7 @@
         </div>
 
         <div class="form-group" id="durationSection" style="display:none;">
-            <label>Lesson Duration</label>
+            <label>🐰 Lesson Duration 🐰</label>
             <div class="radio-group">
                 <div class="radio-option">
                     <input type="radio" id="duration30" name="duration" value="30">
@@ -300,7 +303,7 @@
         </div>
 
         <div class="form-group">
-            <label>Lesson Day Type</label>
+            <label>🐰 Lesson Day Type 🐰</label>
             <div class="radio-group">
                 <div class="radio-option">
                     <input type="radio" id="weekday" name="daytype" value="weekday">
@@ -315,7 +318,7 @@
 
         <div class="form-group" id="planSection" style="display:none;">
             <div id="promotionalPlansSection">
-                <label>Promotional Plans</label>
+                <label>🐰 Promotional Plans 🐰</label>
                 <div class="radio-group promo-plans-grid">
                     <div class="radio-option">
                         <input type="radio" id="plan2month" name="plan" value="2month">
@@ -329,7 +332,7 @@
             </div>
 
             <div style="margin-top: 25px;">
-                <label>Regular Plans</label>
+                <label>🐰 Regular Plans 🐰</label>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="plan3month" name="plan" value="3month">
@@ -344,9 +347,14 @@
         </div>
 
         <div class="form-group">
-            <label>Add-ons (Optional)</label>
+            <label>🐰 Add-ons (Optional) 🐰</label>
 
-            <div class="checkbox-option" id="keyboardCheckbox" style="display:none;">
+            <div class="checkbox-option" id="extraMonthCheckbox" style="display:none;">
+                <input type="checkbox" id="extraMonth">
+                <label for="extraMonth" style="cursor: pointer; margin: 0;">+1 Month Promotion (Extend to 3 Months)</label>
+            </div>
+
+            <div class="checkbox-option" id="keyboardCheckbox" style="display:none; margin-top: 10px;">
                 <input type="checkbox" id="keyboard">
                 <label for="keyboard" style="cursor: pointer; margin: 0;">37-Key Keyboard ($199)</label>
             </div>
@@ -362,7 +370,7 @@
 
         <div id="result" style="display: none;">
             <div class="result-box">
-                <div class="result-title">Fee Breakdown</div>
+                <div class="result-title">🐰 Fee Breakdown 🐰</div>
                 
                 <div class="fee-item" id="monthsPaymentRow" style="display: none;">
                     <span class="fee-label" id="monthsPaymentLabel">Tuition Payment (3 Months)</span>
@@ -390,7 +398,7 @@
                 </div>
                 
                 <div class="fee-item total-row">
-                    <span class="fee-label">Total Amount Due</span>
+                    <span class="fee-label">🐰 Total Amount Due 🐰</span>
                     <span class="fee-value" id="totalFee">$0</span>
                 </div>
             </div>
@@ -456,6 +464,8 @@
         const dayTypeRadios = document.querySelectorAll('input[name="daytype"]');
         const planRadios = document.querySelectorAll('input[name="plan"]');
         const keyboardCheckbox = document.getElementById('keyboard');
+        const extraMonthCheckbox = document.getElementById('extraMonth');
+        const extraMonthCheckboxContainer = document.getElementById('extraMonthCheckbox');
         const v4Option = document.getElementById('v4Option');
         const promoPlansGrid = document.querySelector('.promo-plans-grid');
         const keyboardCheckboxContainer = document.getElementById('keyboardCheckbox');
@@ -475,6 +485,17 @@
             });
         });
         keyboardCheckbox.addEventListener('change', calculateFee);
+        extraMonthCheckbox.addEventListener('change', calculateFee);
+
+        document.getElementById('extraMonthCheckbox').addEventListener('click', function(e) {
+            if (e.target.tagName !== 'INPUT') {
+                extraMonthCheckbox.checked = !extraMonthCheckbox.checked;
+                this.classList.toggle('checked', extraMonthCheckbox.checked);
+                calculateFee();
+            } else {
+                this.classList.toggle('checked', extraMonthCheckbox.checked);
+            }
+        });
 
         function handleDayTypeChange() {
             const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
@@ -570,22 +591,39 @@
             const instrument = individualInstrumentSelect.value;
             const plan = document.querySelector('input[name="plan"]:checked')?.value;
             
+            let hasAddons = false;
+            
+            // Show +1 Month add-on for First 2 Month Promotion
+            if (plan === '2month') {
+                extraMonthCheckboxContainer.style.display = 'flex';
+                hasAddons = true;
+            } else {
+                extraMonthCheckboxContainer.style.display = 'none';
+                extraMonthCheckbox.checked = false;
+            }
+            
             // Keyboard only available for individual piano lessons
             if (lessonType === 'individual' && instrument === 'piano' && plan === '2month') {
                 keyboardCheckboxContainer.style.display = 'flex';
-                noAddons.style.display = 'none';
                 v4KeyboardNote.style.display = 'none';
+                hasAddons = true;
             } else if (lessonType === 'individual' && instrument === 'piano' && plan === 'v4') {
                 // V4 includes keyboard, show note instead of checkbox
                 keyboardCheckboxContainer.style.display = 'none';
-                noAddons.style.display = 'none';
                 keyboardCheckbox.checked = false;
                 v4KeyboardNote.style.display = 'block';
+                hasAddons = false;
             } else {
                 keyboardCheckboxContainer.style.display = 'none';
-                noAddons.style.display = 'block';
                 keyboardCheckbox.checked = false;
                 v4KeyboardNote.style.display = 'none';
+            }
+            
+            // Show "No add-ons" message if no add-ons are available
+            if (hasAddons || plan === 'v4') {
+                noAddons.style.display = 'none';
+            } else {
+                noAddons.style.display = 'block';
             }
         }
 
@@ -650,6 +688,7 @@
             let registrationFee = 0;
             let keyboardFee = 0;
             let tuitionPayment = monthlyTuition;
+            let monthsCount = 1;
 
             // Deposit only for promotional plans (2month and v4)
             if (plan === '2month' || plan === 'v4') {
@@ -662,19 +701,38 @@
                 document.getElementById('depositNote').style.display = 'none';
             }
 
-            // Handle multi-month payment plans
+            // Handle multi-month payment plans with detailed breakdown
             if (plan === 'v4') {
+                monthsCount = 4;
                 tuitionPayment = monthlyTuition * 4;
                 document.getElementById('monthsPaymentRow').style.display = 'flex';
                 document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (4 Months)';
-                document.getElementById('monthsPayment').textContent = '$' + tuitionPayment;
+                document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 4)';
                 document.getElementById('monthlyFeeRow').style.display = 'none';
             } else if (plan === '3month') {
+                monthsCount = 3;
                 tuitionPayment = monthlyTuition * 3;
                 document.getElementById('monthsPaymentRow').style.display = 'flex';
                 document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (3 Months)';
-                document.getElementById('monthsPayment').textContent = '$' + tuitionPayment;
+                document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 3)';
                 document.getElementById('monthlyFeeRow').style.display = 'none';
+            } else if (plan === '2month') {
+                // First 2 Month Promotion pays 2 months (with optional +1 month)
+                if (extraMonthCheckbox.checked) {
+                    monthsCount = 3;
+                    tuitionPayment = monthlyTuition * 3;
+                    document.getElementById('monthsPaymentRow').style.display = 'flex';
+                    document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (3 Months)';
+                    document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 3)';
+                    document.getElementById('monthlyFeeRow').style.display = 'none';
+                } else {
+                    monthsCount = 2;
+                    tuitionPayment = monthlyTuition * 2;
+                    document.getElementById('monthsPaymentRow').style.display = 'flex';
+                    document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (2 Months)';
+                    document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 2)';
+                    document.getElementById('monthlyFeeRow').style.display = 'none';
+                }
             } else {
                 document.getElementById('monthsPaymentRow').style.display = 'none';
                 document.getElementById('monthlyFeeRow').style.display = 'flex';
