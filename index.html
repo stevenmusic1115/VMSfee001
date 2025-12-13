@@ -79,8 +79,26 @@
             gap: 15px;
         }
 
+        .promo-plans-grid.single-button {
+            grid-template-columns: 1fr;
+        }
+
+        .promo-plans-grid.single-button #v4Option {
+            display: none;
+        }
+
         .radio-option {
             width: 100%;
+        }
+
+        #v4Option {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #v4Option.visible {
+            visibility: visible;
+            pointer-events: auto;
         }
 
         .radio-option input[type="radio"] {
@@ -263,12 +281,12 @@
 
         <div class="form-group">
             <label>Promotional Plans</label>
-            <div class="radio-group" id="promoPlansGrid">
-                <div class="radio-option" id="promo2monthOption">
+            <div class="radio-group promo-plans-grid">
+                <div class="radio-option">
                     <input type="radio" id="plan2month" name="plan" value="2month">
                     <label for="plan2month">First 2 Month Promotion<span class="promo-badge">PROMO</span></label>
                 </div>
-                <div class="radio-option" id="v4Option" style="display:none;">
+                <div class="radio-option" id="v4Option">
                     <input type="radio" id="planV4" name="plan" value="v4">
                     <label for="planV4">V4 Plan (4-Month)<span class="promo-badge">PIANO ONLY</span><br><small style="font-size: 11px; opacity: 0.9;">Includes 37-Key Keyboard</small></label>
                 </div>
@@ -378,16 +396,18 @@
         const keyboardCheckbox = document.getElementById('keyboard');
         const registrationCheckbox = document.getElementById('registration');
         const v4Option = document.getElementById('v4Option');
-        const promoPlansGrid = document.getElementById('promoPlansGrid');
+        const promoPlansGrid = document.querySelector('.promo-plans-grid');
         const keyboardCheckboxContainer = document.getElementById('keyboardCheckbox');
         const v4KeyboardNote = document.getElementById('v4KeyboardNote');
         const result = document.getElementById('result');
 
         instrumentSelect.addEventListener('change', function() {
             if (this.value === 'piano') {
-                v4Option.style.display = 'block';
+                v4Option.classList.add('visible');
+                promoPlansGrid.classList.remove('single-button');
             } else {
-                v4Option.style.display = 'none';
+                v4Option.classList.remove('visible');
+                promoPlansGrid.classList.add('single-button');
                 document.getElementById('planV4').checked = false;
             }
             calculateFee();
