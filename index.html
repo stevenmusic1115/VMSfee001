@@ -264,6 +264,20 @@
             </div>
         </div>
 
+        <div class="form-group" id="ageGroupSection" style="display:none;">
+            <label>🐰 Age Group 🐰</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="kid" name="agegroup" value="kid">
+                    <label for="kid">Kid<br>(2-12 years old)</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="adult" name="agegroup" value="adult">
+                    <label for="adult">Adult<br>(≥13 years old)</label>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group" id="individualInstrumentSection" style="display:none;">
             <label>🐰 Select Instrument 🐰</label>
             <select id="individualInstrument">
@@ -453,6 +467,8 @@
         const singPlaySurcharge = 5;
 
         const lessonTypeRadios = document.querySelectorAll('input[name="lessontype"]');
+        const ageGroupSection = document.getElementById('ageGroupSection');
+        const ageGroupRadios = document.querySelectorAll('input[name="agegroup"]');
         const individualInstrumentSection = document.getElementById('individualInstrumentSection');
         const groupInstrumentSection = document.getElementById('groupInstrumentSection');
         const individualInstrumentSelect = document.getElementById('individualInstrument');
@@ -473,7 +489,11 @@
         const v4KeyboardNote = document.getElementById('v4KeyboardNote');
         const result = document.getElementById('result');
 
+        // Adult surcharge
+        const adultSurcharge = 10;
+
         lessonTypeRadios.forEach(radio => radio.addEventListener('change', handleLessonTypeChange));
+        ageGroupRadios.forEach(radio => radio.addEventListener('change', handleAgeGroupChange));
         individualInstrumentSelect.addEventListener('change', handleInstrumentChange);
         groupInstrumentSelect.addEventListener('change', handleInstrumentChange);
         durationRadios.forEach(radio => radio.addEventListener('change', calculateFee));
@@ -499,7 +519,10 @@
 
         function handleDayTypeChange() {
             const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
+            const ageGroup = document.querySelector('input[name="agegroup"]:checked')?.value;
             let hasInstrument = false;
+            
+            if (!ageGroup) return;
             
             if (lessonType === 'individual') {
                 hasInstrument = !!individualInstrumentSelect.value;
@@ -517,6 +540,31 @@
         function handleLessonTypeChange() {
             const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
             
+            if (lessonType) {
+                ageGroupSection.style.display = 'block';
+            } else {
+                ageGroupSection.style.display = 'none';
+            }
+            
+            // Reset subsequent sections
+            individualInstrumentSection.style.display = 'none';
+            groupInstrumentSection.style.display = 'none';
+            durationSection.style.display = 'none';
+            planSection.style.display = 'none';
+            result.style.display = 'none';
+            
+            // Clear selections
+            ageGroupRadios.forEach(radio => radio.checked = false);
+            individualInstrumentSelect.value = '';
+            groupInstrumentSelect.value = '';
+        }
+
+        function handleAgeGroupChange() {
+            const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
+            const ageGroup = document.querySelector('input[name="agegroup"]:checked')?.value;
+            
+            if (!ageGroup) return;
+            
             if (lessonType === 'individual') {
                 individualInstrumentSection.style.display = 'block';
                 groupInstrumentSection.style.display = 'none';
@@ -527,13 +575,11 @@
                 individualInstrumentSection.style.display = 'none';
                 groupInstrumentSection.style.display = 'block';
                 durationSection.style.display = 'none';
-                promotionalPlansSection.style.display = 'block';  // Show promotional section
-                promoPlansGrid.classList.add('single-button');  // Make First 2 Month full width
-                v4Option.classList.remove('visible');  // Hide V4 option
+                promotionalPlansSection.style.display = 'block';
+                promoPlansGrid.classList.add('single-button');
+                v4Option.classList.remove('visible');
                 individualInstrumentSelect.value = '';
-                // Uncheck V4 plan for group lessons
                 document.getElementById('planV4').checked = false;
-                // Clear duration selection
                 durationRadios.forEach(radio => radio.checked = false);
             }
             
@@ -629,10 +675,11 @@
 
         function calculateFee() {
             const lessonType = document.querySelector('input[name="lessontype"]:checked')?.value;
+            const ageGroup = document.querySelector('input[name="agegroup"]:checked')?.value;
             const dayType = document.querySelector('input[name="daytype"]:checked')?.value;
             const plan = document.querySelector('input[name="plan"]:checked')?.value;
 
-            if (!lessonType || !dayType || !plan) {
+            if (!lessonType || !ageGroup || !dayType || !plan) {
                 result.style.display = 'none';
                 return;
             }
@@ -682,6 +729,11 @@
                 }
                 
                 monthlyTuition = groupFeeStructure[instrumentKey][plan][dayType];
+            }
+            
+            // Apply adult surcharge
+            if (ageGroup === 'adult') {
+                monthlyTuition += adultSurcharge;
             }
             
             let deposit = 0;
