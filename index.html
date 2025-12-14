@@ -249,17 +249,23 @@
     <div class="container">
         <h1>🐰 VMS Music School 🐰</h1>
         <div class="subtitle">Tuition Fee Calculator</div>
+        
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="langToggle" style="padding: 8px 20px; border: 2px solid #667eea; background: white; color: #667eea; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s;">
+                中文 / English
+            </button>
+        </div>
 
         <div class="form-group">
-            <label>🐰 Lesson Type 🐰</label>
+            <label data-lang="lessonType">🐰 Lesson Type 🐰</label>
             <div class="radio-group">
                 <div class="radio-option">
                     <input type="radio" id="individual" name="lessontype" value="individual">
-                    <label for="individual">Individual Lesson</label>
+                    <label for="individual" data-lang="individual">Individual Lesson</label>
                 </div>
                 <div class="radio-option">
                     <input type="radio" id="group" name="lessontype" value="group">
-                    <label for="group">
+                    <label for="group" data-lang="group">
                         Group Lesson
                         <small style="display: block; margin-top: 5px; font-size: 11px; color: #ff6b6b; font-weight: 500; line-height: 1.3;">
                             1 people: 30min | 2-3 people: 45min
@@ -270,21 +276,21 @@
         </div>
 
         <div class="form-group" id="ageGroupSection" style="display:none;">
-            <label>🐰 Age Group 🐰</label>
+            <label data-lang="ageGroup">🐰 Age Group 🐰</label>
             <div class="radio-group">
                 <div class="radio-option">
                     <input type="radio" id="kid" name="agegroup" value="kid">
-                    <label for="kid">Kid<br>(2-12 years old)</label>
+                    <label for="kid" data-lang="kid">Kid<br>(2-12 years old)</label>
                 </div>
                 <div class="radio-option">
                     <input type="radio" id="adult" name="agegroup" value="adult">
-                    <label for="adult">Adult<br>(≥13 years old)</label>
+                    <label for="adult" data-lang="adult">Adult<br>(≥13 years old)</label>
                 </div>
             </div>
         </div>
 
         <div class="form-group" id="individualInstrumentSection" style="display:none;">
-            <label>🐰 Select Instrument 🐰</label>
+            <label data-lang="selectInstrument">🐰 Select Instrument 🐰</label>
             <select id="individualInstrument">
                 <option value="">-- Please Select --</option>
                 <option value="piano">Piano</option>
@@ -296,7 +302,7 @@
         </div>
 
         <div class="form-group" id="groupInstrumentSection" style="display:none;">
-            <label>🐰 Select Instrument 🐰</label>
+            <label data-lang="selectInstrument">🐰 Select Instrument 🐰</label>
             <select id="groupInstrument">
                 <option value="">-- Please Select --</option>
                 <option value="guitar_acoustic">Guitar (Acoustic)</option>
@@ -308,7 +314,7 @@
         </div>
 
         <div class="form-group" id="durationSection" style="display:none;">
-            <label>🐰 Lesson Duration 🐰</label>
+            <label data-lang="lessonDuration">🐰 Lesson Duration 🐰</label>
             <div class="radio-group">
                 <div class="radio-option">
                     <input type="radio" id="duration30" name="duration" value="30">
@@ -322,36 +328,36 @@
         </div>
 
         <div class="form-group">
-            <label>🐰 Lesson Day Type 🐰</label>
+            <label data-lang="lessonDayType">🐰 Lesson Day Type 🐰</label>
             <div class="radio-group">
                 <div class="radio-option">
                     <input type="radio" id="weekday" name="daytype" value="weekday">
-                    <label for="weekday">Weekday<br>(Mon-Thu)</label>
+                    <label for="weekday" data-lang="weekday">Weekday<br>(Mon-Thu)</label>
                 </div>
                 <div class="radio-option">
                     <input type="radio" id="weekend" name="daytype" value="weekend">
-                    <label for="weekend">Weekend<br>(Fri-Sun)</label>
+                    <label for="weekend" data-lang="weekend">Weekend<br>(Fri-Sun)</label>
                 </div>
             </div>
         </div>
 
         <div class="form-group" id="planSection" style="display:none;">
             <div id="promotionalPlansSection">
-                <label>🐰 Promotional Plans 🐰</label>
+                <label data-lang="promotionalPlans">🐰 Promotional Plans 🐰</label>
                 <div class="radio-group promo-plans-grid">
                     <div class="radio-option">
                         <input type="radio" id="plan2month" name="plan" value="2month">
-                        <label for="plan2month">First 2 Month Promotion<span class="promo-badge">PROMO</span></label>
+                        <label for="plan2month" data-lang="first2Month">First 2 Month Promotion<span class="promo-badge">PROMO</span></label>
                     </div>
                     <div class="radio-option" id="v4Option">
                         <input type="radio" id="planV4" name="plan" value="v4">
-                        <label for="planV4">V4 Plan (4-Month)<span class="promo-badge">PIANO ONLY</span></label>
+                        <label for="planV4" data-lang="v4Plan">V4 Plan (4-Month)<span class="promo-badge">PIANO ONLY</span></label>
                     </div>
                 </div>
             </div>
 
             <div style="margin-top: 25px;">
-                <label>🐰 Regular Plans 🐰</label>
+                <label data-lang="regularPlans">🐰 Regular Plans 🐰</label>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="plan3month" name="plan" value="3month">
@@ -366,7 +372,7 @@
         </div>
 
         <div class="form-group">
-            <label>🐰 Add-ons (Optional) 🐰</label>
+            <label data-lang="addOns">🐰 Add-ons (Optional) 🐰</label>
 
             <div class="checkbox-option" id="extraMonthCheckbox" style="display:none;">
                 <input type="checkbox" id="extraMonth">
@@ -433,6 +439,122 @@
     </div>
 
     <script>
+        // Language translations
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                title: 'VMS Music School',
+                subtitle: 'Tuition Fee Calculator',
+                lessonType: 'Lesson Type',
+                individual: 'Individual Lesson',
+                group: 'Group Lesson',
+                groupNote: '1 people: 30min | 2-3 people: 45min',
+                ageGroup: 'Age Group',
+                kid: 'Kid',
+                kidAge: '(2-12 years old)',
+                adult: 'Adult',
+                adultAge: '(≥13 years old)',
+                selectInstrument: 'Select Instrument',
+                pleaseSelect: '-- Please Select --',
+                piano: 'Piano',
+                guitar: 'Guitar',
+                guitarAcoustic: 'Guitar (Acoustic)',
+                guitarClassical: 'Guitar (Classical)',
+                guitarElectric: 'Guitar (Electric)',
+                ukulele: 'Ukulele',
+                violin: 'Violin',
+                singPlay: 'Sing & Play',
+                lessonDuration: 'Lesson Duration',
+                minutes30: '30 Minutes',
+                minutes45: '45 Minutes',
+                lessonDayType: 'Lesson Day Type',
+                weekday: 'Weekday',
+                weekdayDays: '(Mon-Thu)',
+                weekend: 'Weekend',
+                weekendDays: '(Fri-Sun)',
+                promotionalPlans: 'Promotional Plans',
+                first2Month: 'First 2 Month Promotion',
+                v4Plan: 'V4 Plan (4-Month)',
+                pianoOnly: 'PIANO ONLY',
+                regularPlans: 'Regular Plans',
+                vPlan: 'V Plan (3-Month)',
+                monthlyPlan: 'Monthly Plan',
+                addOns: 'Add-ons (Optional)',
+                extraMonth: '+1 Month Promotion (Extend to 3 Months)',
+                keyboard: '37-Key Keyboard ($199)',
+                noAddons: 'No add-ons available for this plan',
+                v4KeyboardNote: 'V4 Plan includes 37-Key Keyboard ($99)',
+                keyboardIncluded: 'The keyboard fee is automatically included in your total.',
+                feeBreakdown: 'Fee Breakdown',
+                tuitionPayment: 'Tuition Payment',
+                months: 'Months',
+                monthlyTuition: 'Monthly Tuition',
+                deposit: 'Deposit (1 Month)',
+                registrationFee: 'Registration Fee',
+                totalAmountDue: 'Total Amount Due',
+                noteDeposit: 'The deposit is refundable and equals one month\'s tuition.',
+                noteRegistration: 'Registration fee ($48) is included for promotional plans and is non-refundable.',
+                gstNotice: 'The school does not charge GST.',
+                promo: 'PROMO'
+            },
+            zh: {
+                title: 'VMS 音乐学校',
+                subtitle: '学费计算机',
+                lessonType: '课程类型',
+                individual: '个别课程',
+                group: '团体课程',
+                groupNote: '1人: 30分钟 | 2-3人: 45分钟',
+                ageGroup: '年龄组别',
+                kid: '儿童',
+                kidAge: '(2-12岁)',
+                adult: '成人',
+                adultAge: '(≥13岁)',
+                selectInstrument: '选择乐器',
+                pleaseSelect: '-- 请选择 --',
+                piano: '钢琴',
+                guitar: '吉他',
+                guitarAcoustic: '吉他 (民谣)',
+                guitarClassical: '吉他 (古典)',
+                guitarElectric: '吉他 (电吉他)',
+                ukulele: '尤克里里',
+                violin: '小提琴',
+                singPlay: '弹+唱',
+                lessonDuration: '课程时长',
+                minutes30: '30分钟',
+                minutes45: '45分钟',
+                lessonDayType: '上课时段',
+                weekday: '平日',
+                weekdayDays: '(周一至周四)',
+                weekend: '假日',
+                weekendDays: '(周五至周日)',
+                promotionalPlans: '促销方案',
+                first2Month: '前两个月优惠',
+                v4Plan: 'V4方案 (4个月)',
+                pianoOnly: '仅限钢琴',
+                regularPlans: '常规方案',
+                vPlan: 'V方案 (3个月)',
+                monthlyPlan: '月缴方案',
+                addOns: '加购选项 (可选)',
+                extraMonth: '+1个月优惠 (延长至3个月)',
+                keyboard: '37键电子琴 ($199)',
+                noAddons: '此方案无可用加购选项',
+                v4KeyboardNote: 'V4方案包含37键电子琴 ($99)',
+                keyboardIncluded: '键盘费用已自动包含在总费用中。',
+                feeBreakdown: '费用明细',
+                tuitionPayment: '学费支付',
+                months: '个月',
+                monthlyTuition: '每月学费',
+                deposit: '押金 (1个月)',
+                registrationFee: '报名费',
+                totalAmountDue: '应付总额',
+                noteDeposit: '押金可退还，金额等于一个月学费。',
+                noteRegistration: '促销方案包含报名费 ($48)，报名费不可退还。',
+                gstNotice: '本校不收取消费税 (GST)。',
+                promo: '优惠'
+            }
+        };
+
         // Individual lesson fee structure
         const individualFeeStructure = {
             '2month': {
@@ -500,6 +622,109 @@
 
         // Adult surcharge
         const adultSurcharge = 10;
+
+        // Language toggle
+        document.getElementById('langToggle').addEventListener('click', function() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            updateLanguage();
+        });
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            
+            // Update static text elements
+            document.querySelector('h1').innerHTML = `🐰 ${t.title} 🐰`;
+            document.querySelector('.subtitle').textContent = t.subtitle;
+            
+            // Update all labels with data-lang attribute
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (t[key]) {
+                    if (el.tagName === 'LABEL' && el.querySelector('.promo-badge, small, br')) {
+                        // Handle labels with special content
+                        updateComplexLabel(el, key);
+                    } else {
+                        el.textContent = `🐰 ${t[key]} 🐰`;
+                    }
+                }
+            });
+            
+            // Update select options
+            updateSelectOptions();
+            
+            // Update buttons and other elements
+            updateButtons();
+            
+            // Update result if visible
+            if (result.style.display !== 'none') {
+                calculateFee();
+            }
+        }
+
+        function updateComplexLabel(el, key) {
+            const t = translations[currentLang];
+            // Handle special cases
+            if (key === 'first2Month') {
+                el.innerHTML = `${t[key]}<span class="promo-badge">${t.promo}</span>`;
+            } else if (key === 'v4Plan') {
+                el.innerHTML = `${t[key]}<span class="promo-badge">${t.pianoOnly}</span>`;
+            } else if (key === 'group') {
+                el.innerHTML = `${t[key]}<small style="display: block; margin-top: 5px; font-size: 11px; color: #ff6b6b; font-weight: 500; line-height: 1.3;">${t.groupNote}</small>`;
+            } else if (key === 'weekday') {
+                el.innerHTML = `${t[key]}<br>${t.weekdayDays}`;
+            } else if (key === 'weekend') {
+                el.innerHTML = `${t[key]}<br>${t.weekendDays}`;
+            } else if (key === 'kid') {
+                el.innerHTML = `${t[key]}<br>${t.kidAge}`;
+            } else if (key === 'adult') {
+                el.innerHTML = `${t[key]}<br>${t.adultAge}`;
+            }
+        }
+
+        function updateSelectOptions() {
+            const t = translations[currentLang];
+            
+            // Individual instruments
+            const indOptions = document.getElementById('individualInstrument').options;
+            indOptions[0].text = t.pleaseSelect;
+            indOptions[1].text = t.piano;
+            indOptions[2].text = t.guitar;
+            indOptions[3].text = t.ukulele;
+            indOptions[4].text = t.violin;
+            indOptions[5].text = t.singPlay;
+            
+            // Group instruments
+            const grpOptions = document.getElementById('groupInstrument').options;
+            grpOptions[0].text = t.pleaseSelect;
+            grpOptions[1].text = t.guitarAcoustic;
+            grpOptions[2].text = t.guitarClassical;
+            grpOptions[3].text = t.guitarElectric;
+            grpOptions[4].text = t.ukulele;
+            grpOptions[5].text = t.singPlay;
+        }
+
+        function updateButtons() {
+            const t = translations[currentLang];
+            
+            // Update duration labels
+            document.querySelector('label[for="duration30"]').textContent = t.minutes30;
+            document.querySelector('label[for="duration45"]').textContent = t.minutes45;
+            
+            // Update plan labels
+            document.querySelector('label[for="plan3month"]').textContent = t.vPlan;
+            document.querySelector('label[for="plan1month"]').textContent = t.monthlyPlan;
+            
+            // Update add-ons
+            document.querySelector('label[for="extraMonth"]').textContent = t.extraMonth;
+            document.querySelector('label[for="keyboard"]').textContent = t.keyboard;
+            document.getElementById('noAddons').textContent = t.noAddons;
+            
+            // Update V4 keyboard note
+            document.getElementById('v4KeyboardNote').innerHTML = `<strong>✓ ${t.v4KeyboardNote}</strong> - ${t.keyboardIncluded}`;
+            
+            // Update GST notice
+            document.querySelector('.container > div:last-child').innerHTML = `🐰 ${t.gstNotice} 🐰`;
+        }
 
         lessonTypeRadios.forEach(radio => radio.addEventListener('change', handleLessonTypeChange));
         ageGroupRadios.forEach(radio => radio.addEventListener('change', handleAgeGroupChange));
@@ -763,14 +988,16 @@
                 monthsCount = 4;
                 tuitionPayment = monthlyTuition * 4;
                 document.getElementById('monthsPaymentRow').style.display = 'flex';
-                document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (4 Months)';
+                const t = translations[currentLang];
+                document.getElementById('monthsPaymentLabel').textContent = `${t.tuitionPayment} (4 ${t.months})`;
                 document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 4)';
                 document.getElementById('monthlyFeeRow').style.display = 'none';
             } else if (plan === '3month') {
                 monthsCount = 3;
                 tuitionPayment = monthlyTuition * 3;
                 document.getElementById('monthsPaymentRow').style.display = 'flex';
-                document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (3 Months)';
+                const t = translations[currentLang];
+                document.getElementById('monthsPaymentLabel').textContent = `${t.tuitionPayment} (3 ${t.months})`;
                 document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 3)';
                 document.getElementById('monthlyFeeRow').style.display = 'none';
             } else if (plan === '2month') {
@@ -779,14 +1006,16 @@
                     monthsCount = 3;
                     tuitionPayment = monthlyTuition * 3;
                     document.getElementById('monthsPaymentRow').style.display = 'flex';
-                    document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (3 Months)';
+                    const t = translations[currentLang];
+                    document.getElementById('monthsPaymentLabel').textContent = `${t.tuitionPayment} (3 ${t.months})`;
                     document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 3)';
                     document.getElementById('monthlyFeeRow').style.display = 'none';
                 } else {
                     monthsCount = 2;
                     tuitionPayment = monthlyTuition * 2;
                     document.getElementById('monthsPaymentRow').style.display = 'flex';
-                    document.getElementById('monthsPaymentLabel').textContent = 'Tuition Payment (2 Months)';
+                    const t = translations[currentLang];
+                    document.getElementById('monthsPaymentLabel').textContent = `${t.tuitionPayment} (2 ${t.months})`;
                     document.getElementById('monthsPayment').textContent = '$' + tuitionPayment + ' ($' + monthlyTuition + ' × 2)';
                     document.getElementById('monthlyFeeRow').style.display = 'none';
                 }
@@ -823,9 +1052,20 @@
 
             const total = tuitionPayment + deposit + registrationFee + keyboardFee;
 
+            const t = translations[currentLang];
+            document.querySelector('.result-title').innerHTML = `🐰 ${t.feeBreakdown} 🐰`;
+            document.getElementById('monthlyFeeLabel').textContent = t.monthlyTuition;
             document.getElementById('monthlyFee').textContent = '$' + monthlyTuition;
+            document.querySelector('#depositRow .fee-label').textContent = t.deposit;
             document.getElementById('deposit').textContent = '$' + deposit;
+            document.querySelector('#registrationFeeRow .fee-label').textContent = t.registrationFee;
+            document.querySelector('#keyboardFeeRow .fee-label').textContent = '37-Key Keyboard';
+            document.querySelector('.total-row .fee-label').innerHTML = `🐰 ${t.totalAmountDue} 🐰`;
             document.getElementById('totalFee').textContent = '$' + total;
+            
+            // Update notes
+            document.getElementById('depositNote').innerHTML = `<strong>${currentLang === 'zh' ? '注' : 'Note'}:</strong> ${t.noteDeposit}`;
+            document.getElementById('promoNote').textContent = t.noteRegistration;
 
             result.style.display = 'block';
         }
