@@ -243,6 +243,31 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .lang-btn {
+            padding: 8px 12px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s;
+            min-width: 70px;
+            white-space: nowrap;
+        }
+
+        .lang-btn:hover {
+            background: #f0f0ff;
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -251,9 +276,14 @@
         <div class="subtitle">Tuition Fee Calculator</div>
         
         <div style="text-align: center; margin-bottom: 20px;">
-            <button id="langToggle" style="padding: 8px 20px; border: 2px solid #667eea; background: white; color: #667eea; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s;">
-                中文 / English
-            </button>
+            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: nowrap; overflow-x: auto; padding: 5px 0;">
+                <button class="lang-btn" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="ms">Malay</button>
+                <button class="lang-btn" data-lang="hi">தமிழ்</button>
+                <button class="lang-btn" data-lang="ja">日本語</button>
+                <button class="lang-btn" data-lang="ko">한국어</button>
+            </div>
         </div>
 
         <div class="form-group">
@@ -552,6 +582,226 @@
                 noteRegistration: '促销方案包含报名费 ($48)，报名费不可退还。',
                 gstNotice: '本校不收取消费税 (GST)。',
                 promo: '优惠'
+            },
+            ja: {
+                title: 'VMS音楽学校',
+                subtitle: '授業料計算機',
+                lessonType: 'レッスンタイプ',
+                individual: '個人レッスン',
+                group: 'グループレッスン',
+                groupNote: '1人: 30分 | 2-3人: 45分',
+                ageGroup: '年齢層',
+                kid: '子供',
+                kidAge: '(2-12歳)',
+                adult: '大人',
+                adultAge: '(≥13歳)',
+                selectInstrument: '楽器を選択',
+                pleaseSelect: '-- 選択してください --',
+                piano: 'ピアノ',
+                guitar: 'ギター',
+                guitarAcoustic: 'ギター (アコースティック)',
+                guitarClassical: 'ギター (クラシック)',
+                guitarElectric: 'ギター (エレキ)',
+                ukulele: 'ウクレレ',
+                violin: 'バイオリン',
+                singPlay: '歌+演奏',
+                lessonDuration: 'レッスン時間',
+                minutes30: '30分',
+                minutes45: '45分',
+                lessonDayType: 'レッスン曜日',
+                weekday: '平日',
+                weekdayDays: '(月-木)',
+                weekend: '週末',
+                weekendDays: '(金-日)',
+                promotionalPlans: 'プロモーションプラン',
+                first2Month: '最初の2ヶ月プロモーション',
+                v4Plan: 'V4プラン (4ヶ月)',
+                pianoOnly: 'ピアノのみ',
+                regularPlans: '通常プラン',
+                vPlan: 'Vプラン (3ヶ月)',
+                monthlyPlan: '月払いプラン',
+                addOns: 'オプション',
+                extraMonth: '+1ヶ月プロモーション',
+                keyboard: '37鍵キーボード ($199)',
+                noAddons: 'このプランにはオプションがありません',
+                v4KeyboardNote: 'V4プランには37鍵キーボード ($99)が含まれます',
+                keyboardIncluded: 'キーボード料金は自動的に含まれています。',
+                feeBreakdown: '料金内訳',
+                tuitionPayment: '授業料支払い',
+                months: 'ヶ月',
+                monthlyTuition: '月額授業料',
+                deposit: '保証金 (1ヶ月)',
+                registrationFee: '登録料',
+                totalAmountDue: '合計金額',
+                noteDeposit: '保証金は返金可能で、1ヶ月分の授業料と同額です。',
+                noteRegistration: 'プロモーションプランには登録料 ($48)が含まれており、返金不可です。',
+                gstNotice: '当校はGSTを請求しません。',
+                promo: 'プロモ'
+            },
+            ko: {
+                title: 'VMS 음악학교',
+                subtitle: '수업료 계산기',
+                lessonType: '레슨 유형',
+                individual: '개인 레슨',
+                group: '그룹 레슨',
+                groupNote: '1명: 30분 | 2-3명: 45분',
+                ageGroup: '연령대',
+                kid: '어린이',
+                kidAge: '(2-12세)',
+                adult: '성인',
+                adultAge: '(≥13세)',
+                selectInstrument: '악기 선택',
+                pleaseSelect: '-- 선택하세요 --',
+                piano: '피아노',
+                guitar: '기타',
+                guitarAcoustic: '기타 (어쿠스틱)',
+                guitarClassical: '기타 (클래식)',
+                guitarElectric: '기타 (일렉트릭)',
+                ukulele: '우쿨렐레',
+                violin: '바이올린',
+                singPlay: '노래+연주',
+                lessonDuration: '레슨 시간',
+                minutes30: '30분',
+                minutes45: '45분',
+                lessonDayType: '레슨 요일',
+                weekday: '평일',
+                weekdayDays: '(월-목)',
+                weekend: '주말',
+                weekendDays: '(금-일)',
+                promotionalPlans: '프로모션 플랜',
+                first2Month: '첫 2개월 프로모션',
+                v4Plan: 'V4 플랜 (4개월)',
+                pianoOnly: '피아노 전용',
+                regularPlans: '정규 플랜',
+                vPlan: 'V 플랜 (3개월)',
+                monthlyPlan: '월별 플랜',
+                addOns: '추가 옵션',
+                extraMonth: '+1개월 프로모션',
+                keyboard: '37건반 키보드 ($199)',
+                noAddons: '이 플랜에는 추가 옵션이 없습니다',
+                v4KeyboardNote: 'V4 플랜에는 37건반 키보드 ($99)가 포함됩니다',
+                keyboardIncluded: '키보드 요금이 자동으로 포함되어 있습니다.',
+                feeBreakdown: '요금 내역',
+                tuitionPayment: '수업료 지불',
+                months: '개월',
+                monthlyTuition: '월 수업료',
+                deposit: '보증금 (1개월)',
+                registrationFee: '등록비',
+                totalAmountDue: '총 금액',
+                noteDeposit: '보증금은 환불 가능하며 1개월 수업료와 동일합니다.',
+                noteRegistration: '프로모션 플랜에는 등록비 ($48)가 포함되어 있으며 환불되지 않습니다.',
+                gstNotice: '본교는 GST를 청구하지 않습니다.',
+                promo: '프로모'
+            },
+            ms: {
+                title: 'Sekolah Muzik VMS',
+                subtitle: 'Kalkulator Yuran',
+                lessonType: 'Jenis Pelajaran',
+                individual: 'Pelajaran Individu',
+                group: 'Pelajaran Kumpulan',
+                groupNote: '1 orang: 30min | 2-3 orang: 45min',
+                ageGroup: 'Kumpulan Umur',
+                kid: 'Kanak-kanak',
+                kidAge: '(2-12 tahun)',
+                adult: 'Dewasa',
+                adultAge: '(≥13 tahun)',
+                selectInstrument: 'Pilih Alat Muzik',
+                pleaseSelect: '-- Sila Pilih --',
+                piano: 'Piano',
+                guitar: 'Gitar',
+                guitarAcoustic: 'Gitar (Akustik)',
+                guitarClassical: 'Gitar (Klasik)',
+                guitarElectric: 'Gitar (Elektrik)',
+                ukulele: 'Ukulele',
+                violin: 'Biola',
+                singPlay: 'Menyanyi+Main',
+                lessonDuration: 'Tempoh Pelajaran',
+                minutes30: '30 Minit',
+                minutes45: '45 Minit',
+                lessonDayType: 'Jenis Hari',
+                weekday: 'Hari Bekerja',
+                weekdayDays: '(Isnin-Khamis)',
+                weekend: 'Hujung Minggu',
+                weekendDays: '(Jumaat-Ahad)',
+                promotionalPlans: 'Pelan Promosi',
+                first2Month: 'Promosi 2 Bulan Pertama',
+                v4Plan: 'Pelan V4 (4 Bulan)',
+                pianoOnly: 'PIANO SAHAJA',
+                regularPlans: 'Pelan Biasa',
+                vPlan: 'Pelan V (3 Bulan)',
+                monthlyPlan: 'Pelan Bulanan',
+                addOns: 'Tambahan (Pilihan)',
+                extraMonth: '+1 Bulan Promosi',
+                keyboard: 'Keyboard 37-Kunci ($199)',
+                noAddons: 'Tiada tambahan untuk pelan ini',
+                v4KeyboardNote: 'Pelan V4 termasuk Keyboard 37-Kunci ($99)',
+                keyboardIncluded: 'Yuran keyboard termasuk dalam jumlah.',
+                feeBreakdown: 'Butiran Yuran',
+                tuitionPayment: 'Bayaran Tuisyen',
+                months: 'Bulan',
+                monthlyTuition: 'Tuisyen Bulanan',
+                deposit: 'Deposit (1 Bulan)',
+                registrationFee: 'Yuran Pendaftaran',
+                totalAmountDue: 'Jumlah Keseluruhan',
+                noteDeposit: 'Deposit boleh dikembalikan dan sama dengan tuisyen sebulan.',
+                noteRegistration: 'Yuran pendaftaran ($48) termasuk dalam pelan promosi dan tidak boleh dikembalikan.',
+                gstNotice: 'Sekolah tidak mengenakan GST.',
+                promo: 'PROMO'
+            },
+            hi: {
+                title: 'VMS இசைப் பள்ளி',
+                subtitle: 'கல்விக் கட்டணக் கணிப்பான்',
+                lessonType: 'பாட வகை',
+                individual: 'தனிப்பட்ட பாடம்',
+                group: 'குழு பாடம்',
+                groupNote: '1 நபர்: 30நிமி | 2-3 நபர்கள்: 45நிமி',
+                ageGroup: 'வயதுக் குழு',
+                kid: 'குழந்தைகள்',
+                kidAge: '(2-12 வயது)',
+                adult: 'பெரியவர்கள்',
+                adultAge: '(≥13 வயது)',
+                selectInstrument: 'இசைக்கருவியைத் தேர்ந்தெடுக்கவும்',
+                pleaseSelect: '-- தயவுசெய்து தேர்ந்தெடுக்கவும் --',
+                piano: 'பியானோ',
+                guitar: 'கிட்டார்',
+                guitarAcoustic: 'கிட்டார் (ஒலியியல்)',
+                guitarClassical: 'கிட்டார் (கிளாசிக்கல்)',
+                guitarElectric: 'கிட்டார் (மின்சாரம்)',
+                ukulele: 'யூகுலேலே',
+                violin: 'வயலின்',
+                singPlay: 'பாடல்+இசை',
+                lessonDuration: 'பாட நேரம்',
+                minutes30: '30 நிமிடங்கள்',
+                minutes45: '45 நிமிடங்கள்',
+                lessonDayType: 'பாட நாள் வகை',
+                weekday: 'வார நாட்கள்',
+                weekdayDays: '(திங்-வியா)',
+                weekend: 'வார இறுதி',
+                weekendDays: '(வெள்-ஞாயி)',
+                promotionalPlans: 'விளம்பர திட்டங்கள்',
+                first2Month: 'முதல் 2 மாத விளம்பரம்',
+                v4Plan: 'V4 திட்டம் (4 மாதங்கள்)',
+                pianoOnly: 'பியானோ மட்டும்',
+                regularPlans: 'வழக்கமான திட்டங்கள்',
+                vPlan: 'V திட்டம் (3 மாதங்கள்)',
+                monthlyPlan: 'மாதாந்திர திட்டம்',
+                addOns: 'கூடுதல் விருப்பங்கள்',
+                extraMonth: '+1 மாத விளம்பரம்',
+                keyboard: '37-விசை விசைப்பலகை ($199)',
+                noAddons: 'இந்தத் திட்டத்திற்கு கூடுதல் விருப்பங்கள் இல்லை',
+                v4KeyboardNote: 'V4 திட்டத்தில் 37-விசை விசைப்பலகை ($99) அடங்கும்',
+                keyboardIncluded: 'விசைப்பலகைக் கட்டணம் தானாகவே சேர்க்கப்பட்டுள்ளது.',
+                feeBreakdown: 'கட்டண விவரங்கள்',
+                tuitionPayment: 'கல்விக் கட்டணம்',
+                months: 'மாதங்கள்',
+                monthlyTuition: 'மாதாந்திரக் கல்விக் கட்டணம்',
+                deposit: 'வைப்புத்தொகை (1 மாதம்)',
+                registrationFee: 'பதிவுக் கட்டணம்',
+                totalAmountDue: 'மொத்தத் தொகை',
+                noteDeposit: 'வைப்புத்தொகை திரும்பப் பெறக்கூடியது மற்றும் ஒரு மாதக் கட்டணத்திற்கு சமம்.',
+                noteRegistration: 'விளம்பரத் திட்டங்களில் பதிவுக் கட்டணம் ($48) அடங்கும், திரும்பப் பெற முடியாது.',
+                gstNotice: 'பள்ளி GST வசூலிக்கவில்லை.',
+                promo: 'விளம்பரம்'
             }
         };
 
@@ -624,10 +874,23 @@
         const adultSurcharge = 10;
 
         // Language toggle
-        document.getElementById('langToggle').addEventListener('click', function() {
-            currentLang = currentLang === 'en' ? 'zh' : 'en';
-            updateLanguage();
+        const langButtons = document.querySelectorAll('.lang-btn');
+        
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selectedLang = this.getAttribute('data-lang');
+                currentLang = selectedLang;
+                
+                // Update active state
+                langButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                updateLanguage();
+            });
         });
+        
+        // Set English as default active
+        document.querySelector('.lang-btn[data-lang="en"]').classList.add('active');
 
         function updateLanguage() {
             const t = translations[currentLang];
@@ -1064,7 +1327,15 @@
             document.getElementById('totalFee').textContent = '$' + total;
             
             // Update notes
-            document.getElementById('depositNote').innerHTML = `<strong>${currentLang === 'zh' ? '注' : 'Note'}:</strong> ${t.noteDeposit}`;
+            const notePrefix = {
+                'en': 'Note',
+                'zh': '注',
+                'ja': '注意',
+                'ko': '참고',
+                'ms': 'Nota',
+                'hi': 'குறிப்பு'
+            };
+            document.getElementById('depositNote').innerHTML = `<strong>${notePrefix[currentLang]}:</strong> ${t.noteDeposit}`;
             document.getElementById('promoNote').textContent = t.noteRegistration;
 
             result.style.display = 'block';
