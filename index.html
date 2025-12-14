@@ -570,7 +570,6 @@
                 groupInstrumentSection.style.display = 'none';
                 durationSection.style.display = 'block';
                 promotionalPlansSection.style.display = 'block';
-                groupInstrumentSelect.value = '';
             } else if (lessonType === 'group') {
                 individualInstrumentSection.style.display = 'none';
                 groupInstrumentSection.style.display = 'block';
@@ -578,13 +577,10 @@
                 promotionalPlansSection.style.display = 'block';
                 promoPlansGrid.classList.add('single-button');
                 v4Option.classList.remove('visible');
-                individualInstrumentSelect.value = '';
-                document.getElementById('planV4').checked = false;
-                durationRadios.forEach(radio => radio.checked = false);
             }
             
-            planSection.style.display = 'none';
-            result.style.display = 'none';
+            // Recalculate fee if result was already showing
+            calculateFee();
         }
 
         function handleInstrumentChange() {
