@@ -906,8 +906,12 @@
                     if (el.tagName === 'LABEL' && el.querySelector('.promo-badge, small, br')) {
                         // Handle labels with special content
                         updateComplexLabel(el, key);
-                    } else {
+                    } else if (el.tagName === 'LABEL' && el.parentElement.classList.contains('form-group')) {
+                        // Section headers keep rabbits
                         el.textContent = `🐰 ${t[key]} 🐰`;
+                    } else {
+                        // Regular button labels without rabbits
+                        el.textContent = t[key];
                     }
                 }
             });
